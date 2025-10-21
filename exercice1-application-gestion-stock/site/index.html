@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Compte rendu – Application gestion de stock</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="Compte rendu visuel et guide de l'application Java/Hibernate de gestion de stock." />
+</head>
+<body>
+  <header>
+    <h1>Application de gestion de stock – Compte rendu</h1>
+    <p>Ce site présente un aperçu visuel des résultats d'exécution et un guide rapide. Il est prêt pour un déploiement sur Render en tant que site statique.</p>
+    <nav>
+      <a href="#resultats">Résultats</a>
+      <a href="#lancement">Lancer le projet</a>
+      <a href="#structure">Fonctionnalités testées</a>
+      <a href="#deploiement">Déploiement Render</a>
+      <a href="https://render.com" target="_blank" rel="noopener">Render</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="resultats">
+      <h2>1) Résultats après exécution — Analyse des captures</h2>
+
+      <article class="card">
+        <h3>1. Tests JUnit — tous passent</h3>
+        <ul>
+          <li>testListProduitsParCategorie</li>
+          <li>testProduitsCommandesEntreDeuxDates</li>
+          <li>testProduitsParCommande</li>
+          <li>testProduitsPrixSup100NamedQuery</li>
+        </ul>
+        <p>Initialisation: 2 catégories, 4 produits, 2 commandes, 4 lignes de commande.</p>
+        <img src="captures/img.png" alt="Tests JUnit passés" />
+      </article>
+
+      <article class="card">
+        <h3>2. Tables MySQL créées</h3>
+        <p>Les tables <code>categorie</code>, <code>commande</code>, <code>produit</code>, <code>ligne_commande_produit</code> sont bien créées et peuplées.</p>
+        <img src="captures/img_1.png" alt="Tables MySQL" />
+      </article>
+
+      <article class="card grid">
+        <figure>
+          <figcaption>Table produit</figcaption>
+          <img src="captures/img_2.png" alt="Table produit" />
+        </figure>
+        <figure>
+          <figcaption>Table commande</figcaption>
+          <img src="captures/img_3.png" alt="Table commande" />
+        </figure>
+        <figure>
+          <figcaption>Table categorie</figcaption>
+          <img src="captures/img_4.png" alt="Table categorie" />
+        </figure>
+        <figure>
+          <figcaption>Table ligne_commande_produit</figcaption>
+          <img src="captures/img_5.png" alt="Table ligne_commande_produit" />
+        </figure>
+      </article>
+    </section>
+
+    <section id="lancement">
+      <h2>2) Lancer le projet (local)</h2>
+      <ol>
+        <li>Prérequis: Java 17+, Maven 3.8+.</li>
+        <li>Depuis la racine du module: <code>mvn -q -DskipTests=false test</code></li>
+        <li>Option: Exécuter la classe <code>ma.projet.App</code> depuis l'IDE.</li>
+      </ol>
+      <p>Configurer la base via <code>src/main/resources/application.properties</code> si nécessaire.</p>
+    </section>
+
+    <section id="structure">
+      <h2>3) Fonctionnalités testées</h2>
+      <ul>
+        <li>Lister les produits d’une catégorie donnée.</li>
+        <li>Lister les produits commandés entre deux dates.</li>
+        <li>Lister les produits d’une commande avec prix et quantités (jointure).</li>
+        <li>Requête nommée pour les produits dont le prix est &gt; 100.</li>
+      </ul>
+    </section>
+
+    <section id="deploiement">
+      <h2>4) Déploiement sur Render (site statique)</h2>
+      <ol>
+        <li>Forkez ou poussez ce dépôt sur votre propre compte Git.</li>
+        <li>Sur <a href="https://dashboard.render.com" target="_blank" rel="noopener">Render</a>, créez un nouveau Static Site.</li>
+        <li>Sélectionnez le dépôt et la branche.</li>
+        <li>Publish Directory: <code>site</code></li>
+        <li>Build Command: laissez vide, ou utilisez la configuration du fichier <code>render.yaml</code> fourni pour copier les images.</li>
+      </ol>
+      <p>Ce projet inclut un fichier <code>render.yaml</code> qui définit un service <em>static_site</em>, publie le dossier <code>site</code> et copie automatiquement les captures pour qu'elles soient visibles en production.</p>
+      <p>Après déploiement, communiquez l'URL <code>https://votre-site.onrender.com</code> à votre professeur.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 — Compte rendu de l'application gestion de stock.</p>
+    <p><a href="https://github.com" target="_blank" rel="noopener">Code source</a> · <a href="#top">Haut de page</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,10 @@
+services:
+  - type: static_site
+    name: gestion-stock-compte-rendu
+    env: static
+    buildCommand: bash -c "mkdir -p site/captures && cp -r captures/* site/captures/ || true"
+    staticPublishPath: site
+    headers:
+      - path: "/*"
+        name: "Cache-Control"
+        value: "public, max-age=3600"
