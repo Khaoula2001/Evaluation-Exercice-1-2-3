@@ -1,64 +1,61 @@
 package ma.projet.service;
 
 import ma.projet.beans.Femme;
-import ma.projet.beans.Homme;
-import ma.projet.beans.Mariage;
-import ma.projet.util.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.query.NativeQuery;
+import ma.projet.dao.IDao;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Root;
-import java.time.LocalDate;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import java.util.Date;
 import java.util.List;
 
-public class FemmeService extends BaseService<Femme> {
-    public FemmeService() { super(Femme.class); }
+@Service
+@Transactional
+public class FemmeService implements IDao<Femme> {
 
-    // Requête native nommée: nombre d’enfants d’une femme entre deux dates.
-    public int nombreEnfantsEntreDates(Long femmeId, LocalDate start, LocalDate end) {
-        Session s = HibernateUtil.getSessionFactory().openSession();
-        try {
-            NativeQuery<?> q = (NativeQuery<?>) s.createNativeQuery("SELECT COALESCE(SUM(m.nbr_enfant),0) FROM mariages m WHERE m.femme_id = :femmeId AND m.date_debut >= :start AND (m.date_fin IS NULL OR m.date_fin <= :end)");
-            q.setParameter("femmeId", femmeId);
-            q.setParameter("start", start);
-            q.setParameter("end", end);
-            Object res = q.uniqueResult();
-            if (res == null) return 0;
-            if (res instanceof Number) return ((Number) res).intValue();
-            return Integer.parseInt(res.toString());
-        } finally { s.close(); }
+    @PersistenceContext
+    private EntityManager em;
+
+    private EntityManager session(){ return em; }
+
+    // CRUD
+    @Override
+    public void save(Femme o) { session().persist(o); }
+
+    @Override
+    public void update(Femme o) { session().merge(o); }
+
+    @Override
+    public void delete(Femme o) { session().remove(session().contains(o) ? o : session().merge(o)); }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Femme findById(int id) { return session().find(Femme.class, id); }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Femme> findAll() {
+        return session().createQuery("from Femme", Femme.class).getResultList();
     }
 
-    // Requête nommée: femmes mariées au moins deux fois
-    @SuppressWarnings("unchecked")
-    public List<Femme> femmesMarieesAuMoinsDeuxFois() {
-        Session s = HibernateUtil.getSessionFactory().openSession();
-        try { return s.createNamedQuery("Femme.marriedAtLeastTwice").getResultList(); }
-        finally { s.close(); }
+    // Métier
+    @Transactional(readOnly = true)
+    public long compterEnfantsEntreDates(int femmeId, Date d1, Date d2){
+        Query q = session().createNamedQuery("Femme.countChildrenBetween");
+        q.setParameter("femmeId", femmeId);
+        q.setParameter("startDate", d1);
+        q.setParameter("endDate", d2);
+        Object o = q.getSingleResult();
+        if(o instanceof Number) return ((Number)o).longValue();
+        return Long.parseLong(o.toString());
     }
 
-    // API Criteria: nombre d’hommes mariés à quatre femmes entre deux dates
-    public long nombreHommesMarieAQuatreFemmesEntre(LocalDate start, LocalDate end) {
-        Session s = HibernateUtil.getSessionFactory().openSession();
-        try {
-            CriteriaBuilder cb = s.getCriteriaBuilder();
-            CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-            Root<Homme> homme = cq.from(Homme.class);
-            Join<Homme, Mariage> mariage = homme.join("mariages");
-            cq.select(homme.get("id"));
-            cq.where(
-                    cb.and(
-                            cb.greaterThanOrEqualTo(mariage.get("dateDebut"), start),
-                            cb.or(cb.isNull(mariage.get("dateFin")), cb.lessThanOrEqualTo(mariage.get("dateFin"), end))
-                    )
-            );
-            cq.groupBy(homme.get("id"));
-            cq.having(cb.greaterThanOrEqualTo(cb.countDistinct(mariage.get("femme")), 4L));
-            List<Long> ids = s.createQuery(cq).getResultList();
-            return ids.size();
-        } finally { s.close(); }
+    @Transactional(readOnly = true)
+    public List<Femme> femmesMarieesAuMoinsDeuxFois(){
+        TypedQuery<Femme> q = session().createNamedQuery("Femme.marriedAtLeastTwice", Femme.class);
+        return q.getResultList();
     }
 }

@@ -1,14 +1,25 @@
 package ma.projet.beans;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "mariages")
 public class Mariage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date_debut")
+    private Date dateDebut;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date_fin")
+    private Date dateFin;
+
+    @Column(name = "nbr_enfant")
+    private int nbrEnfant;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "homme_id")
@@ -18,33 +29,21 @@ public class Mariage {
     @JoinColumn(name = "femme_id")
     private Femme femme;
 
-    @Column(name = "date_debut")
-    private LocalDate dateDebut;
-
-    @Column(name = "date_fin")
-    private LocalDate dateFin; // nullable means en cours
-
-    @Column(name = "nbr_enfant")
-    private int nbrEnfant;
-
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
+    public Date getDateDebut() { return dateDebut; }
+    public void setDateDebut(Date dateDebut) { this.dateDebut = dateDebut; }
+    public Date getDateFin() { return dateFin; }
+    public void setDateFin(Date dateFin) { this.dateFin = dateFin; }
+    public int getNbrEnfant() { return nbrEnfant; }
+    public void setNbrEnfant(int nbrEnfant) { this.nbrEnfant = nbrEnfant; }
     public Homme getHomme() { return homme; }
     public void setHomme(Homme homme) { this.homme = homme; }
-
     public Femme getFemme() { return femme; }
     public void setFemme(Femme femme) { this.femme = femme; }
 
-    public LocalDate getDateDebut() { return dateDebut; }
-    public void setDateDebut(LocalDate dateDebut) { this.dateDebut = dateDebut; }
-
-    public LocalDate getDateFin() { return dateFin; }
-    public void setDateFin(LocalDate dateFin) { this.dateFin = dateFin; }
-
-    public int getNbrEnfant() { return nbrEnfant; }
-    public void setNbrEnfant(int nbrEnfant) { this.nbrEnfant = nbrEnfant; }
-
     @Transient
-    public boolean isEnCours() { return dateFin == null; }
+    public boolean estEnCours(){
+        return dateFin == null;
+    }
 }

@@ -2,59 +2,71 @@ package ma.projet.service;
 
 import ma.projet.classes.Categorie;
 import ma.projet.dao.IDao;
-import ma.projet.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import ma.projet.util.HibernateUtil;
 
 import java.util.List;
 
-public class CategorieService implements IDao<Categorie> {
+public class CategorieService implements IDao<Categorie, Long> {
+    private Session getSession(){
+        return HibernateUtil.getSessionFactory().openSession();
+    }
     @Override
-    public Categorie save(Categorie c) {
-        Transaction tx = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            tx = session.beginTransaction();
-            session.persist(c);
+    public boolean create(Categorie o) {
+        Session s = getSession();
+        Transaction tx = s.beginTransaction();
+        try {
+            s.save(o);
             tx.commit();
-            return c;
+            return true;
         } catch (Exception e) {
-            if (tx != null) tx.rollback();
+            tx.rollback();
             throw e;
-        }
+        } finally { s.close(); }
     }
 
     @Override
-    public Categorie update(Categorie c) {
-        Transaction tx = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            tx = session.beginTransaction();
-            c = (Categorie) session.merge(c);
+    public boolean update(Categorie o) {
+        Session s = getSession();
+        Transaction tx = s.beginTransaction();
+        try {
+            s.update(o);
             tx.commit();
-            return c;
-        } catch (Exception e) { if (tx != null) tx.rollback(); throw e; }
+            return true;
+        } catch (Exception e) {
+            tx.rollback();
+            throw e;
+        } finally { s.close(); }
     }
 
     @Override
-    public void delete(Categorie c) {
-        Transaction tx = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            tx = session.beginTransaction();
-            session.remove(session.contains(c) ? c : session.merge(c));
+    public boolean delete(Categorie o) {
+        Session s = getSession();
+        Transaction tx = s.beginTransaction();
+        try {
+            s.delete(o);
             tx.commit();
-        } catch (Exception e) { if (tx != null) tx.rollback(); throw e; }
+            return true;
+        } catch (Exception e) {
+            tx.rollback();
+            throw e;
+        } finally { s.close(); }
     }
 
     @Override
-    public Categorie findById(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(Categorie.class, id);
-        }
+    public Categorie getById(Long id) {
+        Session s = getSession();
+        try {
+            return s.get(Categorie.class, id);
+        } finally { s.close(); }
     }
 
     @Override
-    public List<Categorie> findAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from Categorie", Categorie.class).getResultList();
-        }
+    public List<Categorie> getAll() {
+        Session s = getSession();
+        try {
+            return s.createQuery("from Categorie", Categorie.class).list();
+        } finally { s.close(); }
     }
 }

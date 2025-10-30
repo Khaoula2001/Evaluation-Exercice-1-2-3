@@ -1,85 +1,90 @@
 package ma.projet;
 
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import ma.projet.classes.*;
 import ma.projet.service.*;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-
-@SpringBootApplication
 public class App {
+    private static final SimpleDateFormat DF = new SimpleDateFormat("dd/MM/yyyy");
+
     public static void main(String[] args) {
-        SpringApplication.run(App.class, args);
+        try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class)) {
+            // Services via contexte Spring (découplage)
+            EmployeService employeService = ctx.getBean(EmployeService.class);
+            ProjetService projetService = ctx.getBean(ProjetService.class);
+            TacheService tacheService = ctx.getBean(TacheService.class);
+            EmployeTacheService employeTacheService = ctx.getBean(EmployeTacheService.class);
+
+            // Seed minimal data if DB empty
+            if (projetService.getAll().isEmpty()) {
+                seed(employeService, projetService, tacheService, employeTacheService);
+            }
+
+            // afficher un projet avec ses tâches réalisées (format demandé)
+            List<Projet> projets = projetService.getAll();
+            if (!projets.isEmpty()) {
+                Projet p = projets.get(0);
+                printProjetResume(p);
+                System.out.println("Liste des tâches:");
+                System.out.println("Num Nom            Date Début Réelle   Date Fin Réelle");
+                for (EmployeTache et : projetService.listTachesRealiseesAvecDatesReelles(p.getId())) {
+                    System.out.printf(Locale.FRANCE, "%d  %-14s  %-16s  %-16s%n",
+                            et.getTache().getId(),
+                            et.getTache().getNom(),
+                            et.getDateDebutReelle() == null ? "" : DF.format(et.getDateDebutReelle()),
+                            et.getDateFinReelle() == null ? "" : DF.format(et.getDateFinReelle()));
+                }
+            }
+
+            // Autres exemples d'appels exigés par l'énoncé
+            // - Tâches prix > 1000 DH
+            List<Tache> cheres = tacheService.findTachesPrixSup(1000);
+            System.out.println("\nTâches avec prix > 1000 DH: " + cheres.size());
+            // - Tâches planifiées pour le 1er projet
+            if (!projets.isEmpty()) {
+                List<Tache> plan = projetService.listTachesPlanifieesPourProjet(projets.get(0).getId());
+                System.out.println("Tâches planifiées: " + plan.size());
+            }
+        }
     }
 
-    @Bean
-    CommandLineRunner demo(EmployeService employeService,
-                           ProjetService projetService,
-                           TacheService tacheService,
-                           EmployeTacheService employeTacheService) {
-        return args -> {
-            // Création des employés
-            Employe chef = employeService.create(new Employe("Dupont", "Alice", "0600000001"));
-            Employe dev1 = employeService.create(new Employe("Martin", "Bob", "0600000002"));
-            Employe dev2 = employeService.create(new Employe("Durand", "Chloe", "0600000003"));
-
-            // Création d'un projet
-            Projet projet = new Projet("Gestion de stock",
-                    LocalDate.of(2013, 1, 14),
-                    LocalDate.of(2013, 12, 31),
-                    chef);
-            projet = projetService.create(projet);
-
-            // Tâches planifiées
-            Tache t1 = tacheService.create(new Tache("Analyse", LocalDate.of(2013,2,10), LocalDate.of(2013,2,20), 1500, projet));
-            Tache t2 = tacheService.create(new Tache("Conception", LocalDate.of(2013,3,10), LocalDate.of(2013,3,15), 1800, projet));
-            Tache t3 = tacheService.create(new Tache("Développement", LocalDate.of(2013,4,10), LocalDate.of(2013,4,25), 5000, projet));
-
-            // Affectations réelles
-            employeTacheService.create(new EmployeTache(dev1, t1, LocalDate.of(2013,2,10), LocalDate.of(2013,2,20)));
-            employeTacheService.create(new EmployeTache(dev1, t2, LocalDate.of(2013,3,10), LocalDate.of(2013,3,15)));
-            employeTacheService.create(new EmployeTache(dev2, t3, LocalDate.of(2013,4,10), LocalDate.of(2013,4,25)));
-
-            // Affichages demandés
-            printProjet(projet, projetService);
-            System.out.println();
-
-            // Exemples d'utilisation des autres méthodes
-            List<Tache> chères = tacheService.tachesPrixSuperieur(1000);
-            System.out.println("Tâches avec prix > 1000 DH: ");
-            chères.forEach(t -> System.out.println(" - " + t.getNom() + " (" + t.getPrix() + ")"));
-
-            System.out.println();
-            System.out.println("Tâches réalisées entre 01/03/2013 et 30/04/2013:");
-            employeTacheService.findAll().stream()
-                    .filter(et -> et.getDateDebutReelle()!=null)
-                    .filter(et -> !et.getDateDebutReelle().isBefore(LocalDate.of(2013,3,1))
-                               && !et.getDateFinReelle().isAfter(LocalDate.of(2013,4,30)))
-                    .forEach(et -> System.out.println(" - " + et.getTache().getNom()));
-
-            System.out.println();
-            System.out.println("Projets gérés par " + chef.getNom() + " :");
-            employeService.projetsGeresParEmploye(chef.getId()).forEach(p -> System.out.println(" - " + p.getNom()));
-        };
+    private static void printProjetResume(Projet p) {
+        Calendar c = Calendar.getInstance(Locale.FRANCE);
+        c.setTime(p.getDateDebut());
+        String mois = new java.text.DateFormatSymbols(Locale.FRANCE).getMonths()[c.get(Calendar.MONTH)];
+        System.out.println(String.format("Projet : %d      Nom : %s     Date début : %d %s %d",
+                p.getId(), p.getNom(), c.get(Calendar.DAY_OF_MONTH), capitalize(mois), c.get(Calendar.YEAR)));
     }
 
-    private static void printProjet(Projet projet, ProjetService projetService) {
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("d MMMM uuuu");
-        System.out.println("Projet : " + projet.getId() + "      Nom : " + projet.getNom() + "     Date début : " + fmt.format(projet.getDateDebut()));
-        System.out.println("Liste des tâches:");
-        System.out.println("Num Nom            Date Début Réelle   Date Fin Réelle");
-        List<EmployeTache> realisations = projetService.tachesRealiseesAvecDates(projet.getId());
-        for (EmployeTache et : realisations) {
-            String id = String.valueOf(et.getTache().getId());
-            String nom = String.format("%-14s", et.getTache().getNom());
-            String dd = et.getDateDebutReelle()!=null ? et.getDateDebutReelle().format(DateTimeFormatter.ofPattern("dd/MM/uuuu")) : "";
-            String df = et.getDateFinReelle()!=null ? et.getDateFinReelle().format(DateTimeFormatter.ofPattern("dd/MM/uuuu")) : "";
-            System.out.println(String.format("%s  %s %s          %s", id, nom, dd, df));
+    private static String capitalize(String s) {
+        if (s == null || s.isEmpty()) return s;
+        return Character.toUpperCase(s.charAt(0)) + s.substring(1);
+    }
+
+    private static void seed(EmployeService es, ProjetService ps, TacheService ts, EmployeTacheService ets) {
+        try {
+            Date d1 = DF.parse("14/01/2013");
+            Employe e1 = new Employe("Dupont", "Jean", "0600000000");
+            es.create(e1);
+
+            Projet p1 = new Projet("Gestion de stock", d1, DF.parse("14/07/2013"), e1);
+            ps.create(p1);
+
+            Tache t1 = new Tache("Analyse", DF.parse("10/02/2013"), DF.parse("20/02/2013"), 2000, p1);
+            Tache t2 = new Tache("Conception", DF.parse("10/03/2013"), DF.parse("15/03/2013"), 1500, p1);
+            Tache t3 = new Tache("Développement", DF.parse("10/04/2013"), DF.parse("25/04/2013"), 8000, p1);
+            ts.create(t1); ts.create(t2); ts.create(t3);
+
+            // Liaison + dates réelles = égales aux dates planifiées ici
+            ets.create(new EmployeTache(e1, t1, t1.getDateDebut(), t1.getDateFin()));
+            ets.create(new EmployeTache(e1, t2, t2.getDateDebut(), t2.getDateFin()));
+            ets.create(new EmployeTache(e1, t3, t3.getDateDebut(), t3.getDateFin()));
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }

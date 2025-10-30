@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e7cc03ff-5fbf-4608-b14a-62a88ab06bf9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/config/AppConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/test/java/ma/projet/ProduitServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/AppConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/ex1/2025-10-30_17h29_15.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/ex1/2025-10-30_17h29_55.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/ex1/2025-10-30_17h30_04.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/ex1/2025-10-30_17h30_30.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/ex1/2025-10-30_17h30_39.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/ex1/2025-10-30_17h30_52.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/ex1/2025-10-30_17h31_41.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/ex2/2025-10-30_18h34_03.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/ex2/2025-10-30_18h43_41.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/ex2/2025-10-30_18h44_27.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/ex2/2025-10-30_18h44_46.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/ex2/2025-10-30_18h45_08.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/ex2/2025-10-30_18h45_34.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/ex3/2025-10-30_19h38_42.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/ex3/2025-10-30_19h39_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/ex3/2025-10-30_19h39_15.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/ex3/2025-10-30_19h39_33.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/ex3/2025-10-30_19h39_47.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/captures/img.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/captures/img_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/captures/img_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/captures/img_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/captures/img_4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/captures/img_5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/exercice1-application-gestion-stock/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/render.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/site/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/site/styles.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/classes/Categorie.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/classes/Categorie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/classes/Commande.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/classes/Commande.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/classes/LigneCommandeProduit.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/classes/LigneCommandeProduit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/classes/Produit.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/classes/Produit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/dao/IDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/dao/IDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/service/CategorieService.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/service/CategorieService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/service/CommandeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/service/CommandeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/service/LigneCommandeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/service/LigneCommandeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/service/ProduitService.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/service/ProduitService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/util/HibernateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/java/ma/projet/util/HibernateUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/test/java/ma/projet/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice1-application-gestion-stock/src/test/java/ma/projet/AppTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice2-application-gestion-projets/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/exercice2-application-gestion-projets/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/classes/Employe.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/classes/Employe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/classes/EmployeTache.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/classes/EmployeTache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/classes/EmployeTacheId.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/classes/EmployeTacheId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/classes/Projet.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/classes/Projet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/classes/Tache.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/classes/Tache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/dao/IDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/dao/IDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/service/EmployeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/service/EmployeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/service/EmployeTacheService.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/service/EmployeTacheService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/service/ProjetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/service/ProjetService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/service/TacheService.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/service/TacheService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/util/HibernateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/java/ma/projet/util/HibernateUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/test/java/ma/projet/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice2-application-gestion-projets/src/test/java/ma/projet/AppTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/App.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/beans/Femme.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/beans/Femme.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/beans/Mariage.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/beans/Mariage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/beans/Personne.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/beans/Personne.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/dao/IDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/dao/IDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/service/BaseService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/service/FemmeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/service/FemmeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/service/HommeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/service/HommeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/service/MariageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/service/MariageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/util/HibernateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/util/HibernateUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/java/ma/projet/web/ApiController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/exercice3-application-gestion-etat-civil/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="34UlajsfeR7d5wGXiUJoxMvLd90" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/EMSIIIII/S9/Architecture-MicroServices/TPS/Evaluation-Exercice-1-2-3&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e7cc03ff-5fbf-4608-b14a-62a88ab06bf9" name="Changes" comment="" />
+      <created>1761276097077</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1761276097077</updated>
+      <workItem from="1761276098518" duration="650000" />
+      <workItem from="1761290875360" duration="35000" />
+      <workItem from="1761291696790" duration="3108000" />
+      <workItem from="1761390720676" duration="45000" />
+      <workItem from="1761423438705" duration="1235000" />
+      <workItem from="1761746563932" duration="1280000" />
+      <workItem from="1761749657320" duration="1725000" />
+      <workItem from="1761846641381" duration="3447000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

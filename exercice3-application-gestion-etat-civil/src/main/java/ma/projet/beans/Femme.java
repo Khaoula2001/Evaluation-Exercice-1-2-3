@@ -7,17 +7,23 @@ import java.util.List;
 @Entity
 @Table(name = "femmes")
 @NamedQueries({
-        @NamedQuery(
-                name = "Femme.marriedAtLeastTwice",
-                query = "SELECT f FROM Femme f WHERE SIZE(f.mariages) >= 2"
-        )
+        @NamedQuery(name = "Femme.marriedAtLeastTwice",
+                query = "SELECT f FROM Femme f WHERE size(f.mariages) >= 2")
 })
 @NamedNativeQueries({
         @NamedNativeQuery(
                 name = "Femme.countChildrenBetween",
-                query = "SELECT COALESCE(SUM(m.nbr_enfant),0) FROM mariages m WHERE m.femme_id = :femmeId AND m.date_debut >= :start AND (m.date_fin IS NULL OR m.date_fin <= :end)"
+                query = "SELECT COALESCE(SUM(m.nbr_enfant),0) AS cnt FROM mariages m " +
+                        "WHERE m.femme_id = :femmeId AND m.date_debut BETWEEN :startDate AND :endDate",
+                resultSetMapping = "CountMapping"
         )
 })
+@SqlResultSetMapping(
+        name = "CountMapping",
+        columns = {
+                @ColumnResult(name = "cnt")
+        }
+)
 public class Femme extends Personne {
 
     @OneToMany(mappedBy = "femme", cascade = CascadeType.ALL, orphanRemoval = true)

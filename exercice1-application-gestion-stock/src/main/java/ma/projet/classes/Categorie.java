@@ -1,16 +1,20 @@
 package ma.projet.classes;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "categorie")
 public class Categorie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true, length = 30)
     private String code;
+
+    @Column(nullable = false, length = 100)
     private String libelle;
 
     @OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -34,4 +38,9 @@ public class Categorie {
 
     public List<Produit> getProduits() { return produits; }
     public void setProduits(List<Produit> produits) { this.produits = produits; }
+
+    public void addProduit(Produit p){
+        produits.add(p);
+        p.setCategorie(this);
+    }
 }

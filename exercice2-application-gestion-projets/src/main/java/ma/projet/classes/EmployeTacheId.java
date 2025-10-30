@@ -1,25 +1,26 @@
 package ma.projet.classes;
 
-import jakarta.persistence.Embeddable;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
 public class EmployeTacheId implements Serializable {
-    private Long employeId;
-    private Long tacheId;
+    private Integer employeId;
+    private Integer tacheId;
 
     public EmployeTacheId() {}
 
-    public EmployeTacheId(Long employeId, Long tacheId) {
+    public EmployeTacheId(Integer employeId, Integer tacheId) {
         this.employeId = employeId;
         this.tacheId = tacheId;
     }
 
-    public Long getEmployeId() { return employeId; }
-    public void setEmployeId(Long employeId) { this.employeId = employeId; }
-    public Long getTacheId() { return tacheId; }
-    public void setTacheId(Long tacheId) { this.tacheId = tacheId; }
+    public Integer getEmployeId() { return employeId; }
+    public void setEmployeId(Integer employeId) { this.employeId = employeId; }
+
+    public Integer getTacheId() { return tacheId; }
+    public void setTacheId(Integer tacheId) { this.tacheId = tacheId; }
 
     @Override
     public boolean equals(Object o) {

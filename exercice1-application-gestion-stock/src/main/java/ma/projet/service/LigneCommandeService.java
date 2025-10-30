@@ -2,54 +2,63 @@ package ma.projet.service;
 
 import ma.projet.classes.LigneCommandeProduit;
 import ma.projet.dao.IDao;
-import ma.projet.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import ma.projet.util.HibernateUtil;
 
 import java.util.List;
 
-public class LigneCommandeService implements IDao<LigneCommandeProduit> {
+public class LigneCommandeService implements IDao<LigneCommandeProduit, LigneCommandeProduit.PK> {
+    private Session getSession(){
+        return HibernateUtil.getSessionFactory().openSession();
+    }
     @Override
-    public LigneCommandeProduit save(LigneCommandeProduit l) {
-        Transaction tx = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            tx = session.beginTransaction();
-            l = (LigneCommandeProduit) session.merge(l);
+    public boolean create(LigneCommandeProduit o) {
+        Session s = getSession();
+        Transaction tx = s.beginTransaction();
+        try {
+            s.save(o);
             tx.commit();
-            return l;
-        } catch (Exception e) { if (tx != null) tx.rollback(); throw e; }
+            return true;
+        } catch (Exception e){ tx.rollback(); throw e; }
+        finally { s.close(); }
     }
 
     @Override
-    public LigneCommandeProduit update(LigneCommandeProduit l) {
-        Transaction tx = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            tx = session.beginTransaction();
-            l = (LigneCommandeProduit) session.merge(l);
+    public boolean update(LigneCommandeProduit o) {
+        Session s = getSession();
+        Transaction tx = s.beginTransaction();
+        try {
+            s.update(o);
             tx.commit();
-            return l;
-        } catch (Exception e) { if (tx != null) tx.rollback(); throw e; }
+            return true;
+        } catch (Exception e){ tx.rollback(); throw e; }
+        finally { s.close(); }
     }
 
     @Override
-    public void delete(LigneCommandeProduit l) {
-        Transaction tx = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            tx = session.beginTransaction();
-            session.remove(session.contains(l) ? l : session.merge(l));
+    public boolean delete(LigneCommandeProduit o) {
+        Session s = getSession();
+        Transaction tx = s.beginTransaction();
+        try {
+            s.delete(o);
             tx.commit();
-        } catch (Exception e) { if (tx != null) tx.rollback(); throw e; }
+            return true;
+        } catch (Exception e){ tx.rollback(); throw e; }
+        finally { s.close(); }
     }
 
     @Override
-    public LigneCommandeProduit findById(Long id) {
-        throw new UnsupportedOperationException("Utilisez une clé composite via les champs de l'entité");
+    public LigneCommandeProduit getById(LigneCommandeProduit.PK id) {
+        Session s = getSession();
+        try { return s.get(LigneCommandeProduit.class, id); }
+        finally { s.close(); }
     }
 
     @Override
-    public List<LigneCommandeProduit> findAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from LigneCommandeProduit", LigneCommandeProduit.class).getResultList();
-        }
+    public List<LigneCommandeProduit> getAll() {
+        Session s = getSession();
+        try { return s.createQuery("from LigneCommandeProduit", LigneCommandeProduit.class).list(); }
+        finally { s.close(); }
     }
 }

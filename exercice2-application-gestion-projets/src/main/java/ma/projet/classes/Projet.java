@@ -1,43 +1,55 @@
 package ma.projet.classes;
 
-import jakarta.persistence.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.*;
+import java.util.*;
 
 @Entity
+@Table(name = "projets")
 public class Projet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nom;
-    private LocalDate dateDebut;
-    private LocalDate dateFin;
+    private Integer id;
 
+    private String nom;
+
+    @Temporal(TemporalType.DATE)
+    private Date dateDebut;
+
+    @Temporal(TemporalType.DATE)
+    private Date dateFin;
+
+    // Chef de projet
     @ManyToOne
-    private Employe chefProjet;
+    @JoinColumn(name = "chef_id")
+    private Employe chef;
 
     @OneToMany(mappedBy = "projet", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Tache> taches = new ArrayList<>();
+    private Set<Tache> taches = new HashSet<>();
 
     public Projet() {}
 
-    public Projet(String nom, LocalDate dateDebut, LocalDate dateFin, Employe chefProjet) {
+    public Projet(String nom, Date dateDebut, Date dateFin, Employe chef) {
         this.nom = nom;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
-        this.chefProjet = chefProjet;
+        this.chef = chef;
     }
 
-    public Long getId() { return id; }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
+
     public String getNom() { return nom; }
     public void setNom(String nom) { this.nom = nom; }
-    public LocalDate getDateDebut() { return dateDebut; }
-    public void setDateDebut(LocalDate dateDebut) { this.dateDebut = dateDebut; }
-    public LocalDate getDateFin() { return dateFin; }
-    public void setDateFin(LocalDate dateFin) { this.dateFin = dateFin; }
-    public Employe getChefProjet() { return chefProjet; }
-    public void setChefProjet(Employe chefProjet) { this.chefProjet = chefProjet; }
-    public List<Tache> getTaches() { return taches; }
-    public void setTaches(List<Tache> taches) { this.taches = taches; }
+
+    public Date getDateDebut() { return dateDebut; }
+    public void setDateDebut(Date dateDebut) { this.dateDebut = dateDebut; }
+
+    public Date getDateFin() { return dateFin; }
+    public void setDateFin(Date dateFin) { this.dateFin = dateFin; }
+
+    public Employe getChef() { return chef; }
+    public void setChef(Employe chef) { this.chef = chef; }
+
+    public Set<Tache> getTaches() { return taches; }
+    public void setTaches(Set<Tache> taches) { this.taches = taches; }
 }

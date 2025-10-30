@@ -1,27 +1,31 @@
 package ma.projet.classes;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity
-@NamedQuery(name = "Produit.findPrixSup100", query = "from Produit p where p.prix > 100")
+@Table(name = "produit")
+@NamedQuery(name = "Produit.findByPrixSup",
+        query = "SELECT p FROM Produit p WHERE p.prix > :minPrix ORDER BY p.prix DESC")
 public class Produit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true, length = 30)
     private String reference;
+
+    @Column(nullable = false)
     private float prix;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categorie_id")
     private Categorie categorie;
 
     public Produit() {}
 
-    public Produit(String reference, float prix, Categorie categorie) {
+    public Produit(String reference, float prix) {
         this.reference = reference;
         this.prix = prix;
-        this.categorie = categorie;
     }
 
     public Long getId() { return id; }

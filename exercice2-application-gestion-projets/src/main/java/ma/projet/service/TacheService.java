@@ -1,64 +1,100 @@
 package ma.projet.service;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
-import ma.projet.classes.EmployeTache;
-import ma.projet.classes.Tache;
-import ma.projet.dao.IDao;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import ma.projet.classes.Tache;
+import ma.projet.dao.IDao;
+
 @Service
-@Transactional
 public class TacheService implements IDao<Tache> {
 
-    @PersistenceContext
-    private EntityManager em;
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
-    public Tache create(Tache o) {
-        em.persist(o);
-        return o;
-    }
-
-    @Override
-    public Tache update(Tache o) {
-        return em.merge(o);
-    }
-
-    @Override
-    public void delete(Long id) {
-        Tache t = em.find(Tache.class, id);
-        if (t != null) em.remove(t);
+    public boolean create(Tache o) {
+        Transaction tx = null;
+        try (Session s = sessionFactory.openSession()) {
+            tx = s.beginTransaction();
+            s.save(o);
+            tx.commit();
+            return true;
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
-    public Tache findById(Long id) {
-        return em.find(Tache.class, id);
+    public Tache getById(int id) {
+        try (Session s = sessionFactory.openSession()) {
+            return s.get(Tache.class, id);
+        }
     }
 
     @Override
-    public List<Tache> findAll() {
-        return em.createQuery("from Tache", Tache.class).getResultList();
+    public List<Tache> getAll() {
+        try (Session s = sessionFactory.openSession()) {
+            return s.createQuery("from Tache", Tache.class).list();
+        }
     }
 
-    // Méthode pour afficher les tâches dont le prix est supérieur à 'min' (requête nommée)
-    public List<Tache> tachesPrixSuperieur(double min) {
-        return em.createNamedQuery("Tache.findByPrixSup", Tache.class)
-                .setParameter("min", min)
-                .getResultList();
+    @Override
+    public boolean update(Tache o) {
+        Transaction tx = null;
+        try (Session s = sessionFactory.openSession()) {
+            tx = s.beginTransaction();
+            s.update(o);
+            tx.commit();
+            return true;
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    // Méthode pour afficher les tâches réalisées entre deux dates (basée sur dates réelles dans EmployeTache)
-    public List<EmployeTache> tachesRealiseesEntre(LocalDate debut, LocalDate fin) {
-        return em.createQuery(
-                "select et from EmployeTache et where et.dateDebutReelle >= :d1 and et.dateFinReelle <= :d2",
-                EmployeTache.class)
-            .setParameter("d1", debut)
-            .setParameter("d2", fin)
-            .getResultList();
+    @Override
+    public boolean delete(Tache o) {
+        Transaction tx = null;
+        try (Session s = sessionFactory.openSession()) {
+            tx = s.beginTransaction();
+            s.delete(o);
+            tx.commit();
+            return true;
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Tâches dont le prix > min (utilise requête nommée)
+    public List<Tache> findTachesPrixSup(double min) {
+        try (Session s = sessionFactory.openSession()) {
+            return s.createNamedQuery("Tache.findPrixSup", Tache.class)
+                    .setParameter("minPrix", min)
+                    .getResultList();
+        }
+    }
+
+    // Tâches réalisées entre deux dates (ici sur dates planifiées fin)
+    public List<Tache> findTachesRealiseesEntre(Date debut, Date fin) {
+        try (Session s = sessionFactory.openSession()) {
+            return s.createQuery(
+                    "select t from Tache t where t.dateFin between :d1 and :d2",
+                    Tache.class)
+                    .setParameter("d1", debut)
+                    .setParameter("d2", fin)
+                    .getResultList();
+        }
     }
 }

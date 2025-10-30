@@ -1,65 +1,102 @@
 package ma.projet.service;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import ma.projet.classes.Employe;
 import ma.projet.classes.EmployeTache;
 import ma.projet.classes.Projet;
 import ma.projet.dao.IDao;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
-@Transactional
 public class EmployeService implements IDao<Employe> {
 
-    @PersistenceContext
-    private EntityManager em;
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
-    public Employe create(Employe o) {
-        em.persist(o);
-        return o;
+    public boolean create(Employe o) {
+        Transaction tx = null;
+        try (Session s = sessionFactory.openSession()) {
+            tx = s.beginTransaction();
+            s.save(o);
+            tx.commit();
+            return true;
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
-    public Employe update(Employe o) {
-        return em.merge(o);
+    public Employe getById(int id) {
+        try (Session s = sessionFactory.openSession()) {
+            return s.get(Employe.class, id);
+        }
     }
 
     @Override
-    public void delete(Long id) {
-        Employe e = em.find(Employe.class, id);
-        if (e != null) em.remove(e);
+    public List<Employe> getAll() {
+        try (Session s = sessionFactory.openSession()) {
+            return s.createQuery("from Employe", Employe.class).list();
+        }
     }
 
     @Override
-    public Employe findById(Long id) {
-        return em.find(Employe.class, id);
+    public boolean update(Employe o) {
+        Transaction tx = null;
+        try (Session s = sessionFactory.openSession()) {
+            tx = s.beginTransaction();
+            s.update(o);
+            tx.commit();
+            return true;
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
-    public List<Employe> findAll() {
-        return em.createQuery("from Employe", Employe.class).getResultList();
+    public boolean delete(Employe o) {
+        Transaction tx = null;
+        try (Session s = sessionFactory.openSession()) {
+            tx = s.beginTransaction();
+            s.delete(o);
+            tx.commit();
+            return true;
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    // Afficher la liste des tâches réalisées par un employé (via EmployeTache)
-    public List<EmployeTache> tachesRealiseesParEmploye(Long employeId) {
-        return em.createQuery(
-                "select et from EmployeTache et where et.employe.id = :id and et.dateDebutReelle is not null",
-                EmployeTache.class)
-            .setParameter("id", employeId)
-            .getResultList();
+    // Afficher la liste des tâches réalisées par un employé (dates réelles non nulles)
+    public List<EmployeTache> listTachesRealiseesParEmploye(int employeId) {
+        try (Session s = sessionFactory.openSession()) {
+            return s.createQuery(
+                    "select et from EmployeTache et where et.employe.id = :emp and et.dateDebutReelle is not null",
+                    EmployeTache.class)
+                    .setParameter("emp", employeId)
+                    .getResultList();
+        }
     }
 
     // Afficher la liste des projets gérés par un employé (chef de projet)
-    public List<Projet> projetsGeresParEmploye(Long employeId) {
-        return em.createQuery(
-                "select p from Projet p where p.chefProjet.id = :id",
-                Projet.class)
-            .setParameter("id", employeId)
-            .getResultList();
+    public List<Projet> listProjetsGeresParEmploye(int employeId) {
+        try (Session s = sessionFactory.openSession()) {
+            return s.createQuery(
+                    "select p from Projet p where p.chef.id = :emp",
+                    Projet.class)
+                    .setParameter("emp", employeId)
+                    .getResultList();
+        }
     }
 }

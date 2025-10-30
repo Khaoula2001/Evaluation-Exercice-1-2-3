@@ -2,10 +2,10 @@ package ma.projet.dao;
 
 import java.util.List;
 
-public interface IDao<T> {
-    T save(T t);
-    T update(T t);
-    void delete(T t);
-    T findById(Long id);
-    List<T> findAll();
+public interface IDao<T, ID> {
+    boolean create(T o);
+    boolean update(T o);
+    boolean delete(T o);
+    T getById(ID id);
+    List<T> getAll();
 }

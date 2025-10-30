@@ -1,27 +1,36 @@
 package ma.projet.service;
 
-import ma.projet.beans.Homme;
 import ma.projet.beans.Mariage;
-import ma.projet.util.HibernateUtil;
-import org.hibernate.Session;
+import ma.projet.dao.IDao;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
-public class MariageService extends BaseService<Mariage> {
-    public MariageService() { super(Mariage.class); }
+@Service
+@Transactional
+public class MariageService implements IDao<Mariage> {
+    @PersistenceContext
+    private EntityManager em;
 
-    // Afficher les mariages d’un homme donné, avec détails
-    public List<Mariage> mariagesDUnHomme(Long hommeId) {
-        Session s = HibernateUtil.getSessionFactory().openSession();
-        try {
-            return s.createQuery("from Mariage m where m.homme.id = :hid order by m.dateDebut", Mariage.class)
-                    .setParameter("hid", hommeId)
-                    .getResultList();
-        } finally { s.close(); }
-    }
+    private EntityManager session(){ return em; }
 
-    public Homme chargerHomme(Long hommeId) {
-        Session s = HibernateUtil.getSessionFactory().openSession();
-        try { return s.get(Homme.class, hommeId); } finally { s.close(); }
-    }
+    @Override
+    public void save(Mariage o) { session().persist(o); }
+
+    @Override
+    public void update(Mariage o) { session().merge(o); }
+
+    @Override
+    public void delete(Mariage o) { session().remove(session().contains(o) ? o : session().merge(o)); }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Mariage findById(int id) { return session().find(Mariage.class, id); }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Mariage> findAll() { return session().createQuery("from Mariage", Mariage.class).getResultList(); }
 }
